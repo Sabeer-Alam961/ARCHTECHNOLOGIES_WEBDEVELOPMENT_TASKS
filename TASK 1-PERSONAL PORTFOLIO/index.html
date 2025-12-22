@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERSONAL PORTFOLIO WEBSITE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Portfolio</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#introduction">Home</a></li>
+                    <li><a href="#background">Background</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Introduction Section -->
+    <section id="introduction">
+        <div class="bg-gradient"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="intro-content">
+                <div class="intro-badge">👋 Welcome to my portfolio</div>
+                <h1 class="glitch" data-text="Sabeer Alam">Sabeer Alam</h1>
+                <p class="subtitle">Full Stack Developer & UI/UX Designer</p>
+                <p class="description">Passionate about creating innovative web solutions with clean code and intuitive
+                    design. Seeking to leverage 5+ years of development experience in a challenging role at a
+                    forward-thinking tech company.</p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                    <a href="#projects" class="btn btn-secondary">View Work</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Background Section -->
+    <section id="background">
+        <div class="container">
+            <h2>Education & Certifications</h2>
+            <div class="education-item">
+                <h3>Master of Science in Computer Science</h3>
+                <p class="date">Stanford University | 2016 - 2018</p>
+                <p>Specialized in Human-Computer Interaction and Web Technologies. Graduated with Honors.</p>
+            </div>
+            <div class="education-item">
+                <h3>Bachelor of Science in Software Engineering</h3>
+                <p class="date">MIT | 2012 - 2016</p>
+                <p>Minor in Business Administration. President of Web Development Club.</p>
+            </div>
+
+            <h2 style="margin-top: 4rem;">Certifications</h2>
+            <div class="certification-item">
+                <h3>AWS Certified Solutions Architect</h3>
+                <p class="date">Amazon Web Services | 2020</p>
+                <p>Validation of technical expertise in designing distributed systems on AWS.</p>
+            </div>
+            <div class="certification-item">
+                <h3>Google UX Design Professional Certificate</h3>
+                <p class="date">Google | 2021</p>
+                <p>Comprehensive training in UX design fundamentals and tools.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img gradient-green">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-number">01</div>
+                        <h3>E-Commerce Platform</h3>
+                        <p>A full-featured online shopping platform with user authentication, payment processing, and
+                            admin dashboard.</p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">FastAPI</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-clock"></i>
+                                <span>-60% Analysis Time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img gradient-orange">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-number">02</div>
+                        <h3>Health & Fitness App</h3>
+                        <p>Mobile application for tracking workouts, nutrition, and health metrics with social features.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Redux</span>
+                            <span class="tech-tag">GraphQL</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>10K+ Downloads</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2>Technical Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-check-circle"></i> HTML5, CSS3, JavaScript (ES6+)</li>
+                        <li><i class="fas fa-check-circle"></i> React, Vue.js, Angular</li>
+                        <li><i class="fas fa-check-circle"></i> TypeScript, Bootstrap, Tailwind</li>
+                        <li><i class="fas fa-check-circle"></i> Responsive Web Design</li>
+                        <li><i class="fas fa-check-circle"></i> UI/UX Design Principles</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-check-circle"></i> Node.js, Express.js</li>
+                        <li><i class="fas fa-check-circle"></i> Python, Django, Flask</li>
+                        <li><i class="fas fa-check-circle"></i> RESTful APIs, GraphQL</li>
+                        <li><i class="fas fa-check-circle"></i> Authentication & Authorization</li>
+                        <li><i class="fas fa-check-circle"></i> Microservices Architecture</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Database & Tools</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-check-circle"></i> MongoDB, PostgreSQL, MySQL</li>
+                        <li><i class="fas fa-check-circle"></i> Git, Docker, AWS</li>
+                        <li><i class="fas fa-check-circle"></i> Jenkins, Kubernetes</li>
+                        <li><i class="fas fa-check-circle"></i> Figma, Adobe XD</li>
+                        <li><i class="fas fa-check-circle"></i> Agile/Scrum Methodologies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2>Work Experience</h2>
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3>Senior Full Stack Developer</h3>
+                        <p style="color: var(--text-dim);">TechVision Inc., San Francisco, CA</p>
+                    </div>
+                    <p class="date">Jan 2020 - Present</p>
+                </div>
+                <ul>
+                    <li>Led a team of 5 developers in building scalable web applications for enterprise clients.</li>
+                    <li>Reduced application load time by 40% through code optimization and caching strategies.</li>
+                    <li>Implemented CI/CD pipelines that decreased deployment time by 60%.</li>
+                    <li>Mentored junior developers and conducted technical interviews for new hires.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3>Frontend Developer</h3>
+                        <p style="color: var(--text-dim);">Digital Solutions LLC, New York, NY</p>
+                    </div>
+                    <p class="date">Jun 2018 - Dec 2019</p>
+                </div>
+                <ul>
+                    <li>Developed responsive web applications using React and Redux for state management.</li>
+                    <li>Collaborated with UX designers to implement pixel-perfect interfaces.</li>
+                    <li>Improved website performance scores by 30% on Google Lighthouse.</li>
+                    <li>Contributed to open-source projects and presented at two tech conferences.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog/Articles Section -->
+    <section id="blog">
+        <div class="container">
+            <h2>Blog & Articles</h2>
+            <div class="blog-container">
+                <div class="blog-card">
+                    <div class="project-img"
+                        style="background: linear-gradient(135deg, #3b82f6, #2563eb); height: 200px;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Optimizing React Performance in 2023</h3>
+                        <p>Explore advanced techniques for improving React application performance, including code
+                            splitting, lazy loading, and memoization strategies.</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="project-img"
+                        style="background: linear-gradient(135deg, #ef4444, #dc2626); height: 200px;">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Microservices vs Monolith Architecture</h3>
+                        <p>A comprehensive comparison of architectural patterns with practical guidance on choosing the
+                            right approach for your project.</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="project-img"
+                        style="background: linear-gradient(135deg, #10b981, #059669); height: 200px;">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>Accessibility in Modern Web Design</h3>
+                        <p>Learn how to create inclusive web experiences that work for everyone, regardless of ability
+                            or device.</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <div class="container">
+            <h2>Awards & Honors</h2>
+            <div class="achievements-container">
+                <div class="achievement-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Best Web App 2022</h3>
+                    <p>Web Dev Awards for the Financial Analytics Dashboard project.</p>
+                </div>
+
+                <div class="achievement-card">
+                    <i class="fas fa-award"></i>
+                    <h3>Outstanding Innovation</h3>
+                    <p>TechVision Inc. Employee of the Year 2021.</p>
+                </div>
+
+                <div class="achievement-card">
+                    <i class="fas fa-medal"></i>
+                    <h3>Hackathon Winner</h3>
+                    <p>1st place at CodeFest 2020 for a health-tech solution.</p>
+                </div>
+
+                <div class="achievement-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Open Source Contributor</h3>
+                    <p>Recognized for significant contributions to React libraries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p style="color: var(--text-dim); max-width: 600px; margin: 0 auto 3rem;">I'm always open to discussing new
+                opportunities and interesting projects.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p>john.doe@example.com</p>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <h3>Phone</h3>
+                    <p>+1 (123) 456-7890</p>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Location</h3>
+                    <p>San Francisco, CA</p>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-codepen"></i></a>
+            </div>
+
+            <a href="mailto:john.doe@example.com" class="btn btn-primary" style="margin-top: 2rem;">Send Message</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Sabeer Alam. All rights reserved.</p>
+            <p>Designed and built with passion and modern web technologies</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
