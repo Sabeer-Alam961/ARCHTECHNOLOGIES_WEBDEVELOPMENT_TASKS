@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium To-Do</title>
+    <meta name="description" content="A simple, elegant To-Do list application to manage your tasks effectively.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Using Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-acccent"></div>
+    <div class="container">
+        <header>
+            <h1>Task<span class="highlight">Master</span></h1>
+            <p id="date-display">Today's Tasks</p>
+        </header>
+
+        <div class="input-group">
+            <input type="text" id="task-input" placeholder="What needs to be done?" autocomplete="off">
+            <button id="add-btn" aria-label="Add Task">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <ul id="task-list" class="task-list">
+            <!-- Tasks will be injected here -->
+        </ul>
+        
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <i class="fas fa-clipboard-check"></i>
+            <p>All caught up!</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
