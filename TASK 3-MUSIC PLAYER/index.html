@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="music-player-card">
+        <header class="app-header">
+            <div class="app-logo">
+                <i class="fas fa-music"></i>
+                <span>MusePlay</span>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search songs, artists, albums...">
+            </div>
+            <div class="category-filters" id="category-filters">
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="Pop">Pop</button>
+                <button class="filter-btn" data-category="Electronic">Electronic</button>
+                <button class="filter-btn" data-category="Chill">Chill</button>
+                <button class="filter-btn" data-category="Favorites">Favorites</button>
+            </div>
+        </header>
+
+        <main class="playlist-container">
+            <ul class="playlist" id="playlist">
+                <!-- Dynamically populated by JavaScript -->
+            </ul>
+        </main>
+
+        <footer class="player-controls">
+            <div class="progress-container">
+                <span class="current-time">0:45</span>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar" style="width: 25%;"></div>
+                </div>
+                <span class="total-duration">3:25</span>
+            </div>
+
+            <div class="control-buttons">
+                <button class="control-btn prev"><i class="fas fa-backward-step"></i></button>
+                <button class="control-btn play-pause"><i class="fas fa-pause"></i></button>
+                <button class="control-btn next"><i class="fas fa-forward-step"></i></button>
+            </div>
+
+            <div class="volume-control">
+                <i class="fas fa-volume-high"></i>
+                <input type="range" class="volume-slider" min="0" max="100" value="80">
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
