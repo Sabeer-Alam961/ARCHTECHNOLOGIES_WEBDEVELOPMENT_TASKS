@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Test Client</title>
+    <!-- Include Socket.IO client library (using CDN for simplicity) -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        #notifications { border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: scroll; margin-top: 20px; }
+        .notification { padding: 5px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+    <h1>Real-Time Notification Client</h1>
+    
+    <div>
+        <label>Enter User ID to Join Room:</label>
+        <input type="text" id="userId" placeholder="User ID">
+        <button onclick="joinRoom()">Join</button>
+    </div>
+
+    <h3>Notifications / Events:</h3>
+    <div id="notifications"></div>
+
+    <script>
+        // Connect to the server
+        const socket = io('http://localhost:5000');
+
+        socket.on('connect', () => {
+            log('Connected to server with ID: ' + socket.id);
+        });
+
+        socket.on('disconnect', () => {
+            log('Disconnected from server');
+        });
+
+        // Listen for new notifications
+        socket.on('new_notification', (data) => {
+            console.log('Notification received:', data);
+            log(`🔔 New Notification: ${data.message} (Type: ${data.type})`);
+        });
+
+        // Listen for user online status
+        socket.on('user_online', (userId) => {
+            log(`🟢 User ${userId} is now Online`);
+        });
+
+        function joinRoom() {
+            const userId = document.getElementById('userId').value;
+            if (userId) {
+                socket.emit('join', userId);
+                log(`Joining room for user: ${userId}`);
+            } else {
+                alert('Please enter a User ID');
+            }
+        }
+
+        function log(message) {
+            const container = document.getElementById('notifications');
+            const div = document.createElement('div');
+            div.className = 'notification';
+            div.innerText = message;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+    </script>
+</body>
+</html>
