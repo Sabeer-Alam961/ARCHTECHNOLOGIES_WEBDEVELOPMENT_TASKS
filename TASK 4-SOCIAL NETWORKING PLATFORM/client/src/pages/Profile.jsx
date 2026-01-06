@@ -36,23 +36,53 @@ const Profile = () => {
         fetchProfile();
     }, [id]);
 
-    const handleFriendRequest = async () => {
+    const handleFriendAction = async (action) => {
         try {
-            await api.post(`/users/friend-request/${id}`);
-            toast.success('Friend Request Sent!');
+            if (action === 'send') {
+                await api.post(`/users/friend-request/${id}`);
+                toast.success('Friend Request Sent!');
+                setProfileUser(prev => ({ ...prev, relationship: 'pending_sent' }));
+            } else if (action === 'accept') {
+                // We need the requestId, but for simplicity if we are on the profile, 
+                // we can just re-fetch or use a dedicated endpoint if available.
+                // Or better, handle it via the notifications or a specific request search.
+                // For now, let's assume we fetch requests to find the right one or use the sender's ID.
+                const { data: requests } = await api.get('/users/friend-requests');
+                const request = requests.find(r => r.sender._id === id);
+                if (request) {
+                    await api.put(`/users/friend-request/${request._id}/accept`);
+                    toast.success('Friend Request Accepted!');
+                    setProfileUser(prev => ({ ...prev, relationship: 'friends' }));
+                }
+            } else if (action === 'unfriend') {
+                await api.delete(`/users/friends/${id}`);
+                toast.success('Friend Removed');
+                setProfileUser(prev => ({ ...prev, relationship: 'none' }));
+            }
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Failed to send request');
+            toast.error(error.response?.data?.message || 'Action failed');
         }
     };
 
     const handleAvatarUpdate = async (newAvatar) => {
         setUpdatingAvatar(true);
         try {
-            const { data } = await api.put('/users/profile', { avatar: newAvatar });
+            let res;
+            if (typeof newAvatar === 'string') {
+                res = await api.put('/users/profile', { avatar: newAvatar });
+            } else {
+                const formData = new FormData();
+                formData.append('avatar', newAvatar);
+                res = await api.put('/users/profile', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }
+            const { data } = res;
             setProfileUser(prev => ({ ...prev, profile: data.profile }));
             setShowAvatarModal(false);
             toast.success('Avatar updated successfully!');
-            // Update local storage/context if needed
         } catch (error) {
             toast.error('Failed to update avatar');
             console.error(error);
@@ -71,11 +101,11 @@ const Profile = () => {
 
     if (!profileUser) return (
         <div className="text-center py-20">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-24 h-24 theme-bg-inner rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-4xl">😕</span>
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">User not found</h2>
-            <p className="text-gray-500">This user doesn't exist or has been removed.</p>
+            <h2 className="text-xl font-bold theme-text-primary mb-2">User not found</h2>
+            <p className="theme-text-muted">This user doesn't exist or has been removed.</p>
             <Link to="/" className="inline-block mt-4 text-primary-600 font-semibold hover:underline">Go back home</Link>
         </div>
     );
@@ -106,12 +136,32 @@ const Profile = () => {
                                 ))}
                             </div>
 
-                            <button
-                                onClick={() => setShowAvatarModal(false)}
-                                className="w-full py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all"
-                            >
-                                Cancel
-                            </button>
+                            <div className="space-y-4">
+                                <input
+                                    type="file"
+                                    id="custom-avatar"
+                                    className="hidden"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        if (e.target.files[0]) handleAvatarUpdate(e.target.files[0]);
+                                    }}
+                                />
+                                <button
+                                    onClick={() => document.getElementById('custom-avatar').click()}
+                                    disabled={updatingAvatar}
+                                    className="w-full py-3 bg-primary-50 text-primary-600 rounded-xl font-semibold hover:bg-primary-100 transition-all flex items-center justify-center gap-2 border border-primary-200"
+                                >
+                                    <FaCamera />
+                                    <span>Upload Custom Image</span>
+                                </button>
+
+                                <button
+                                    onClick={() => setShowAvatarModal(false)}
+                                    className="w-full py-3 theme-bg-inner theme-text-primary rounded-xl font-semibold hover:theme-bg-inner transition-all"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -143,7 +193,7 @@ const Profile = () => {
                                     <img
                                         src={profileUser.profile?.avatar || 'https://via.placeholder.com/160'}
                                         alt="Avatar"
-                                        className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white object-cover bg-white shadow-lg"
+                                        className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 theme-border object-cover theme-bg-inner shadow-lg"
                                     />
                                 </div>
                                 <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 border-3 border-white rounded-full"></div>
@@ -162,11 +212,11 @@ const Profile = () => {
 
                             {/* Info & Actions */}
                             <div className="flex-grow text-center md:text-left mb-2">
-                                <h1 className="text-3xl font-bold text-gray-900">{profileUser.username}</h1>
-                                <p className="text-gray-500 font-medium">@{profileUser.username}</p>
-                                <div className="flex items-center justify-center md:justify-start gap-6 mt-3 text-sm text-gray-500">
-                                    <span><strong className="text-gray-900">256</strong> Friends</span>
-                                    <span><strong className="text-gray-900">48</strong> Posts</span>
+                                <h1 className="text-3xl font-bold theme-text-primary">{profileUser.username}</h1>
+                                <p className="theme-text-muted font-medium">@{profileUser.username}</p>
+                                <div className="flex items-center justify-center md:justify-start gap-6 mt-3 text-sm theme-text-muted">
+                                    <span><strong className="theme-text-primary">256</strong> Friends</span>
+                                    <span><strong className="theme-text-primary">48</strong> Posts</span>
                                 </div>
                             </div>
 
@@ -174,21 +224,49 @@ const Profile = () => {
                             <div className="flex gap-3 w-full md:w-auto justify-center md:justify-end">
                                 {!isOwnProfile && (
                                     <>
-                                        <button
-                                            onClick={handleFriendRequest}
-                                            className="btn-gradient text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"
-                                        >
-                                            <FaUserPlus />
-                                            <span>Add Friend</span>
-                                        </button>
-                                        <button className="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all flex items-center gap-2">
+                                        {profileUser.relationship === 'none' && (
+                                            <button
+                                                onClick={() => handleFriendAction('send')}
+                                                className="btn-gradient text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"
+                                            >
+                                                <FaUserPlus />
+                                                <span>Add Friend</span>
+                                            </button>
+                                        )}
+                                        {profileUser.relationship === 'pending_sent' && (
+                                            <button
+                                                className="bg-gray-100 text-gray-500 px-6 py-3 rounded-xl font-semibold flex items-center gap-2 cursor-default"
+                                            >
+                                                <FaCheck />
+                                                <span>Request Sent</span>
+                                            </button>
+                                        )}
+                                        {profileUser.relationship === 'pending_received' && (
+                                            <button
+                                                onClick={() => handleFriendAction('accept')}
+                                                className="btn-gradient text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2"
+                                            >
+                                                <FaUserCheck />
+                                                <span>Accept Request</span>
+                                            </button>
+                                        )}
+                                        {profileUser.relationship === 'friends' && (
+                                            <button
+                                                onClick={() => handleFriendAction('unfriend')}
+                                                className="bg-red-50 text-red-600 px-6 py-3 rounded-xl font-semibold hover:bg-red-100 transition-all flex items-center gap-2"
+                                            >
+                                                <FaUserPlus className="rotate-45" />
+                                                <span>Unfriend</span>
+                                            </button>
+                                        )}
+                                        <button className="theme-bg-inner theme-text-primary px-6 py-3 rounded-xl font-semibold hover:theme-bg-inner transition-all flex items-center gap-2">
                                             <FaEnvelope />
                                             <span>Message</span>
                                         </button>
                                     </>
                                 )}
                                 {isOwnProfile && (
-                                    <button className="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all">
+                                    <button className="theme-bg-inner theme-text-primary px-6 py-3 rounded-xl font-semibold hover:theme-bg-inner transition-all">
                                         Edit Profile
                                     </button>
                                 )}
@@ -203,37 +281,37 @@ const Profile = () => {
                     <div className="space-y-6">
                         {/* About Card */}
                         <div className="glass-card rounded-2xl p-6 hover-lift">
-                            <h3 className="font-bold text-gray-900 mb-4 text-lg">About</h3>
-                            <p className="text-gray-600 leading-relaxed text-sm mb-6">
+                            <h3 className="font-bold theme-text-primary mb-4 text-lg">About</h3>
+                            <p className="theme-text-secondary leading-relaxed text-sm mb-6">
                                 {profileUser.profile?.bio || 'Just another amazing person on SocialNet. 🌟'}
                             </p>
 
                             <div className="space-y-4 text-sm">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600">
+                                    <div className="w-10 h-10 rounded-xl theme-bg-inner flex items-center justify-center text-primary-600">
                                         <FaBriefcase />
                                     </div>
                                     <div>
-                                        <p className="text-gray-500 text-xs">Works at</p>
-                                        <p className="font-semibold text-gray-900">Tech Corporation</p>
+                                        <p className="theme-text-muted text-xs">Works at</p>
+                                        <p className="font-semibold theme-text-primary">Tech Corporation</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center text-green-600">
+                                    <div className="w-10 h-10 rounded-xl theme-bg-inner flex items-center justify-center text-green-600">
                                         <FaMapMarkerAlt />
                                     </div>
                                     <div>
-                                        <p className="text-gray-500 text-xs">Lives in</p>
-                                        <p className="font-semibold text-gray-900">New York, USA</p>
+                                        <p className="theme-text-muted text-xs">Lives in</p>
+                                        <p className="font-semibold theme-text-primary">New York, USA</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                                    <div className="w-10 h-10 rounded-xl theme-bg-inner flex items-center justify-center text-purple-600">
                                         <FaCalendarAlt />
                                     </div>
                                     <div>
-                                        <p className="text-gray-500 text-xs">Joined</p>
-                                        <p className="font-semibold text-gray-900">
+                                        <p className="theme-text-muted text-xs">Joined</p>
+                                        <p className="font-semibold theme-text-primary">
                                             {new Date(profileUser.createdAt).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}
                                         </p>
                                     </div>
@@ -244,7 +322,7 @@ const Profile = () => {
                         {/* Friends Preview Card */}
                         <div className="glass-card rounded-2xl p-6 hover-lift">
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-gray-900 text-lg">Friends</h3>
+                                <h3 className="font-bold theme-text-primary text-lg">Friends</h3>
                                 <a href="#" className="text-primary-600 text-sm font-medium hover:underline">See All</a>
                             </div>
                             <div className="grid grid-cols-3 gap-3">
@@ -253,7 +331,7 @@ const Profile = () => {
                                         <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-primary-400 to-secondary-400 flex items-center justify-center text-white font-bold text-lg mb-2 group-hover:scale-105 transition-transform">
                                             {String.fromCharCode(64 + i)}
                                         </div>
-                                        <p className="text-xs text-gray-600 font-medium truncate">Friend {i}</p>
+                                        <p className="text-xs theme-text-secondary font-medium truncate">Friend {i}</p>
                                     </div>
                                 ))}
                             </div>
@@ -263,11 +341,11 @@ const Profile = () => {
                     {/* Right Column - Posts */}
                     <div className="lg:col-span-2">
                         <div className="glass-card rounded-2xl p-8 text-center hover-lift">
-                            <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-20 h-20 bg-gradient-to-br from-gray-500/10 to-gray-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <span className="text-4xl">📭</span>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-2">No posts yet</h3>
-                            <p className="text-gray-500 max-w-sm mx-auto">
+                            <h3 className="text-xl font-bold theme-text-primary mb-2">No posts yet</h3>
+                            <p className="theme-text-muted max-w-sm mx-auto">
                                 When {profileUser.username} shares posts, they will appear here.
                             </p>
                         </div>

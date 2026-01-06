@@ -12,7 +12,35 @@ const getUserProfile = async (req, res) => {
             .populate('friends', 'username profile.avatar');
 
         if (user) {
-            res.json(user);
+            // Determine relationship status with the requesting user
+            let relationship = 'none';
+            const currentUserId = req.user.id;
+
+            if (user._id.toString() === currentUserId) {
+                relationship = 'self';
+            } else if (user.friends.some(f => f._id.toString() === currentUserId)) {
+                relationship = 'friends';
+            } else {
+                const pendingSent = await FriendRequest.findOne({
+                    sender: currentUserId,
+                    receiver: user._id,
+                    status: 'pending'
+                });
+                if (pendingSent) {
+                    relationship = 'pending_sent';
+                } else {
+                    const pendingReceived = await FriendRequest.findOne({
+                        sender: user._id,
+                        receiver: currentUserId,
+                        status: 'pending'
+                    });
+                    if (pendingReceived) {
+                        relationship = 'pending_received';
+                    }
+                }
+            }
+
+            res.json({ ...user._doc, relationship });
         } else {
             res.status(404);
             throw new Error('User not found');
@@ -34,7 +62,12 @@ const updateUserProfile = async (req, res) => {
             user.profile.firstName = req.body.firstName || user.profile.firstName;
             user.profile.lastName = req.body.lastName || user.profile.lastName;
             user.profile.bio = req.body.bio || user.profile.bio;
-            user.profile.avatar = req.body.avatar || user.profile.avatar;
+
+            if (req.file) {
+                user.profile.avatar = req.file.path;
+            } else if (req.body.avatar) {
+                user.profile.avatar = req.body.avatar;
+            }
 
             // Password update logic could go here too
 
@@ -108,7 +141,16 @@ const sendFriendRequest = async (req, res) => {
 const acceptFriendRequest = async (req, res) => {
     try {
         const requestId = req.params.requestId;
-        const friendRequest = await FriendRequest.findById(requestId);
+        let friendRequest = await FriendRequest.findById(requestId);
+
+        // If not found by ID, it might be a sender ID (passed from notification)
+        if (!friendRequest) {
+            friendRequest = await FriendRequest.findOne({
+                sender: requestId,
+                receiver: req.user.id,
+                status: 'pending'
+            });
+        }
 
         if (!friendRequest) {
             res.status(404);
@@ -132,11 +174,18 @@ const acceptFriendRequest = async (req, res) => {
         const sender = await User.findById(friendRequest.sender);
         const receiver = await User.findById(friendRequest.receiver);
 
-        sender.friends.push(receiver.id);
-        receiver.friends.push(sender.id);
+        if (!sender.friends.includes(receiver.id)) {
+            sender.friends.push(receiver.id);
+        }
+        if (!receiver.friends.includes(sender.id)) {
+            receiver.friends.push(sender.id);
+        }
 
         await sender.save();
         await receiver.save();
+
+        // Create notification for the sender that their request was accepted
+        await createNotification(friendRequest.sender, 'friend_accept', req.user.id);
 
         res.json({ message: 'Friend request accepted' });
 
@@ -146,9 +195,104 @@ const acceptFriendRequest = async (req, res) => {
     }
 }
 
+// @desc    Reject Friend Request
+// @route   PUT /api/users/friend-request/:requestId/reject
+// @access  Protected
+const rejectFriendRequest = async (req, res) => {
+    try {
+        const requestId = req.params.requestId;
+        let friendRequest = await FriendRequest.findById(requestId);
+
+        // If not found by ID, it might be a sender ID
+        if (!friendRequest) {
+            friendRequest = await FriendRequest.findOne({
+                sender: requestId,
+                receiver: req.user.id,
+                status: 'pending'
+            });
+        }
+
+        if (!friendRequest) {
+            res.status(404);
+            throw new Error('Friend request not found');
+        }
+
+        if (friendRequest.receiver.toString() !== req.user.id) {
+            res.status(401);
+            throw new Error('Not authorized to reject this request');
+        }
+
+        friendRequest.status = 'rejected';
+        await friendRequest.save();
+
+        res.json({ message: 'Friend request rejected' });
+
+    } catch (error) {
+        res.status(500);
+        throw new Error(error.message);
+    }
+};
+
+// @desc    Get Pending Friend Requests
+// @route   GET /api/users/friend-requests
+// @access  Protected
+const getFriendRequests = async (req, res) => {
+    try {
+        const requests = await FriendRequest.find({
+            receiver: req.user.id,
+            status: 'pending'
+        }).populate('sender', 'username profile.avatar');
+
+        res.json(requests);
+    } catch (error) {
+        res.status(500);
+        throw new Error(error.message);
+    }
+};
+
+// @desc    Remove Friend (Unfriend)
+// @route   DELETE /api/users/friends/:id
+// @access  Protected
+const removeFriend = async (req, res) => {
+    try {
+        const friendId = req.params.id;
+        const userId = req.user.id;
+
+        const user = await User.findById(userId);
+        const friend = await User.findById(friendId);
+
+        if (!friend) {
+            res.status(404);
+            throw new Error('User not found');
+        }
+
+        user.friends = user.friends.filter(f => f.toString() !== friendId);
+        friend.friends = friend.friends.filter(f => f.toString() !== userId);
+
+        await user.save();
+        await friend.save();
+
+        // Also remove any accepted friend request record to allow re-friending later if desired
+        await FriendRequest.findOneAndDelete({
+            $or: [
+                { sender: userId, receiver: friendId },
+                { sender: friendId, receiver: userId }
+            ]
+        });
+
+        res.json({ message: 'Friend removed' });
+    } catch (error) {
+        res.status(500);
+        throw new Error(error.message);
+    }
+};
+
 module.exports = {
     getUserProfile,
     updateUserProfile,
     sendFriendRequest,
     acceptFriendRequest,
+    rejectFriendRequest,
+    getFriendRequests,
+    removeFriend,
 };

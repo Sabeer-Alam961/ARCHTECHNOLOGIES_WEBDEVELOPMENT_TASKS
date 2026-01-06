@@ -11,6 +11,9 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Notifications from './pages/Notifications';
+import Settings from './pages/Settings';
+
+import { ThemeProvider } from './context/ThemeContext';
 
 // Protected Route Wrapper
 import { useContext } from 'react';
@@ -26,43 +29,53 @@ function App() {
     return (
         <Router>
             <AuthProvider>
-                <SocketProvider>
-                    <div className="min-h-screen bg-gray-100 flex flex-col font-sans">
-                        <Navbar />
-                        <div className="flex-grow pt-16">
-                            <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/register" element={<Register />} />
+                <ThemeProvider>
+                    <SocketProvider>
+                        <div className="min-h-screen flex flex-col font-sans transition-colors duration-300">
+                            <Navbar />
+                            <div className="flex-grow pt-16">
+                                <Routes>
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/register" element={<Register />} />
 
-                                <Route
-                                    path="/"
-                                    element={
-                                        <ProtectedRoute>
-                                            <Home />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/profile/:id"
-                                    element={
-                                        <ProtectedRoute>
-                                            <Profile />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/notifications"
-                                    element={
-                                        <ProtectedRoute>
-                                            <Notifications />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                            </Routes>
+                                    <Route
+                                        path="/"
+                                        element={
+                                            <ProtectedRoute>
+                                                <Home />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/profile/:id"
+                                        element={
+                                            <ProtectedRoute>
+                                                <Profile />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/notifications"
+                                        element={
+                                            <ProtectedRoute>
+                                                <Notifications />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/settings"
+                                        element={
+                                            <ProtectedRoute>
+                                                <Settings />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                </Routes>
+                            </div>
+                            <ToastContainer />
                         </div>
-                        <ToastContainer />
-                    </div>
-                </SocketProvider>
+                    </SocketProvider>
+                </ThemeProvider>
             </AuthProvider>
         </Router>
     );

@@ -59,7 +59,7 @@ const PostCard = ({ post }) => {
             {/* Header */}
             <div className="p-5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <Link to={`/profile/${post.author._id}`} className="avatar-ring flex-shrink-0">
+                    <Link to={`/profile/${post.author._id}`} className="flex-shrink-0">
                         <img
                             src={post.author.profile?.avatar || 'https://via.placeholder.com/44'}
                             alt="Avatar"
@@ -69,25 +69,25 @@ const PostCard = ({ post }) => {
                     <div>
                         <Link
                             to={`/profile/${post.author._id}`}
-                            className="font-semibold text-gray-900 hover:text-primary-600 transition-colors"
+                            className="font-semibold theme-text-primary hover:text-primary-600 transition-colors"
                         >
                             {post.author.username}
                         </Link>
-                        <p className="text-gray-400 text-xs mt-0.5 flex items-center gap-1">
+                        <p className="theme-text-muted text-xs mt-0.5 flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                             {new Date(post.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                         </p>
                     </div>
                 </div>
 
-                <button className="text-gray-400 hover:text-gray-600 p-2.5 rounded-xl hover:bg-gray-50 transition-all icon-btn">
+                <button className="theme-text-muted hover:theme-text-primary p-2.5 rounded-xl hover:theme-bg-inner transition-all icon-btn">
                     <FaEllipsisH />
                 </button>
             </div>
 
             {/* Content */}
             <div className="px-5 pb-3">
-                <p className="text-gray-800 leading-relaxed whitespace-pre-wrap text-[15px]">{post.content.text}</p>
+                <p className="theme-text-secondary leading-relaxed whitespace-pre-wrap text-[15px]">{post.content.text}</p>
             </div>
 
             {post.content.image && (
@@ -116,12 +116,12 @@ const PostCard = ({ post }) => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-between items-center px-3 py-2 border-t border-gray-100/50 mx-2">
+            <div className="flex justify-between items-center px-3 py-2 border-t theme-border mx-2">
                 <button
                     onClick={handleLike}
                     className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl transition-all active:scale-95 font-medium ${liked
-                            ? 'text-red-500 bg-red-50/80'
-                            : 'text-gray-500 hover:bg-gray-50'
+                        ? 'text-red-500 bg-red-500/10'
+                        : 'theme-text-muted hover:theme-bg-inner'
                         }`}
                 >
                     {liked ? <FaHeart className="text-lg" /> : <FaRegHeart className="text-lg" />}
@@ -130,25 +130,25 @@ const PostCard = ({ post }) => {
                 <button
                     onClick={toggleComments}
                     className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl transition-all active:scale-95 font-medium ${showComments
-                            ? 'text-primary-600 bg-primary-50/80'
-                            : 'text-gray-500 hover:bg-gray-50'
+                        ? 'text-primary-600 bg-primary-600/10'
+                        : 'theme-text-muted hover:theme-bg-inner'
                         }`}
                 >
                     <FaComment className="text-lg" />
                     <span>Comment</span>
                 </button>
-                <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-gray-500 hover:bg-gray-50 transition-all active:scale-95 font-medium">
+                <button className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl theme-text-muted hover:theme-bg-inner transition-all active:scale-95 font-medium">
                     <FaShare className="text-lg" />
                     <span>Share</span>
                 </button>
-                <button className="p-2.5 rounded-xl text-gray-400 hover:bg-gray-50 hover:text-primary-600 transition-all icon-btn">
+                <button className="p-2.5 rounded-xl theme-text-muted hover:theme-bg-inner hover:text-primary-600 transition-all icon-btn">
                     <FaBookmark />
                 </button>
             </div>
 
             {/* Comments Section */}
             {showComments && (
-                <div className="bg-gray-50/50 p-5 border-t border-gray-100/50 fade-in">
+                <div className="theme-bg-inner p-5 border-t theme-border fade-in">
                     {/* Comment Form */}
                     <form onSubmit={submitComment} className="flex items-center gap-3 mb-5">
                         <img
@@ -160,13 +160,13 @@ const PostCard = ({ post }) => {
                             <input
                                 type="text"
                                 placeholder="Write a comment..."
-                                className="w-full bg-white rounded-full px-5 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-primary-500/30 border border-gray-200/80 text-sm transition-all"
+                                className="w-full theme-bg-inner rounded-full px-5 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-primary-500/30 border theme-border text-sm transition-all theme-text-primary"
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                             />
                             <button
                                 type="submit"
-                                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-primary-600 hover:bg-primary-50 rounded-full transition-colors"
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-primary-600 hover:bg-primary-500/10 rounded-full transition-colors"
                             >
                                 <FaPaperPlane size={14} />
                             </button>
@@ -190,19 +190,19 @@ const PostCard = ({ post }) => {
                                         />
                                     </Link>
                                     <div className="flex-grow">
-                                        <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100/50 inline-block max-w-full">
+                                        <div className="theme-bg-inner px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border theme-border inline-block max-w-full">
                                             <div className="flex items-baseline gap-2 mb-1">
                                                 <Link
                                                     to={`/profile/${comment.author._id}`}
-                                                    className="font-semibold text-sm text-gray-900 hover:text-primary-600 transition-colors"
+                                                    className="font-semibold text-sm theme-text-primary hover:text-primary-600 transition-colors"
                                                 >
                                                     {comment.author.username}
                                                 </Link>
-                                                <span className="text-gray-400 text-xs">
+                                                <span className="theme-text-muted text-xs">
                                                     {new Date(comment.createdAt).toLocaleDateString()}
                                                 </span>
                                             </div>
-                                            <p className="text-gray-700 text-sm leading-relaxed">{comment.content}</p>
+                                            <p className="theme-text-secondary text-sm leading-relaxed">{comment.content}</p>
                                         </div>
                                     </div>
                                 </div>

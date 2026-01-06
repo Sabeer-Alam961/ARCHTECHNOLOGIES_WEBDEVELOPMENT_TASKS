@@ -7,9 +7,11 @@ const {
 } = require('../controllers/postController');
 const { protect } = require('../middleware/authMiddleware');
 
+const { uploadSingle } = require('../middleware/uploadMiddleware');
+
 router.route('/')
     .get(protect, getFeed)
-    .post(protect, createPost);
+    .post(protect, uploadSingle('image'), createPost);
 
 router.put('/:id/like', protect, likePost);
 

@@ -41,23 +41,23 @@ const Register = () => {
             <div className="max-w-4xl w-full glass-card rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row fade-in">
 
                 {/* Left Side: Form */}
-                <div className="md:w-1/2 p-10 bg-white/50 order-2 md:order-1">
+                <div className="md:w-1/2 p-10 theme-bg-inner order-2 md:order-1">
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900">Join <span className="text-gradient">SocialNet</span></h2>
-                        <p className="text-gray-500 text-sm mt-2">Create your account to get started.</p>
+                        <h2 className="text-2xl font-bold theme-text-primary">Join <span className="text-gradient">SocialNet</span></h2>
+                        <p className="theme-text-muted text-sm mt-2">Create your account to get started.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Avatar Selection */}
                         <div className="space-y-3">
-                            <label className="text-sm font-semibold text-gray-700 block text-center">Choose Your Avatar</label>
+                            <label className="text-sm font-semibold theme-text-primary block text-center">Choose Your Avatar</label>
                             <div className="flex flex-wrap justify-center gap-4">
                                 {avatarOptions.map((avatar, index) => (
                                     <button
                                         key={index}
                                         type="button"
                                         onClick={() => setSelectedAvatar(avatar)}
-                                        className={`relative group transition-all transform hover:scale-110 active:scale-95 ${selectedAvatar === avatar ? 'ring-4 ring-primary-500 ring-offset-2' : 'ring-1 ring-gray-200'
+                                        className={`relative group transition-all transform hover:scale-110 active:scale-95 ${selectedAvatar === avatar ? 'ring-4 ring-primary-500 ring-offset-2' : 'ring-1 theme-border'
                                             } rounded-full p-0.5 overflow-hidden shadow-sm`}
                                     >
                                         <img src={avatar} alt={`Avatar ${index}`} className="w-12 h-12 rounded-full object-cover bg-white" />
@@ -73,10 +73,10 @@ const Register = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="relative">
-                                <FaUser className="absolute top-4 left-4 text-gray-400" />
+                                <FaUser className="absolute top-4 left-4 theme-text-muted" />
                                 <input
                                     type="text"
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                    className="w-full pl-12 pr-4 py-3.5 theme-bg-inner border theme-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 theme-text-primary transition-all text-sm"
                                     placeholder="Username"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
@@ -84,10 +84,10 @@ const Register = () => {
                                 />
                             </div>
                             <div className="relative">
-                                <FaEnvelope className="absolute top-4 left-4 text-gray-400" />
+                                <FaEnvelope className="absolute top-4 left-4 theme-text-muted" />
                                 <input
                                     type="email"
-                                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                    className="w-full pl-12 pr-4 py-3.5 theme-bg-inner border theme-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 theme-text-primary transition-all text-sm"
                                     placeholder="Email Address"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -96,10 +96,10 @@ const Register = () => {
                             </div>
                         </div>
                         <div className="relative">
-                            <FaLock className="absolute top-4 left-4 text-gray-400" />
+                            <FaLock className="absolute top-4 left-4 theme-text-muted" />
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="w-full pl-12 pr-12 py-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                className="w-full pl-12 pr-12 py-3.5 theme-bg-inner border theme-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 theme-text-primary transition-all text-sm"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -108,16 +108,16 @@ const Register = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                                className="absolute top-4 right-4 theme-text-muted hover:theme-text-primary transition-colors"
                             >
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
                         <div className="relative">
-                            <FaLock className="absolute top-4 left-4 text-gray-400" />
+                            <FaLock className="absolute top-4 left-4 theme-text-muted" />
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="w-full pl-12 pr-4 py-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                className="w-full pl-12 pr-4 py-3.5 theme-bg-inner border theme-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 theme-text-primary transition-all text-sm"
                                 placeholder="Confirm Password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -133,20 +133,20 @@ const Register = () => {
                         </button>
                     </form>
 
-                    <div className="mt-6 border-t border-gray-200/50 pt-6">
-                        <p className="text-center text-gray-500 text-sm mb-4">Or sign up with</p>
+                    <div className="mt-6 border-t theme-border pt-6">
+                        <p className="text-center theme-text-muted text-sm mb-4">Or sign up with</p>
                         <div className="flex gap-4 justify-center">
-                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-200/80 text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-all hover-lift">
+                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl theme-bg-inner border theme-border text-blue-600 hover:bg-blue-500/10 transition-all hover-lift">
                                 <FaFacebook size={22} />
                             </button>
-                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-200/80 text-red-500 hover:bg-red-50 hover:border-red-200 transition-all hover-lift">
+                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl theme-bg-inner border theme-border text-red-500 hover:bg-red-500/10 transition-all hover-lift">
                                 <FaGoogle size={22} />
                             </button>
                         </div>
                     </div>
 
                     <div className="mt-6 text-center text-sm">
-                        <span className="text-gray-500">Already have an account? </span>
+                        <span className="theme-text-muted">Already have an account? </span>
                         <Link to="/login" className="font-bold text-primary-600 hover:text-primary-700 hover:underline transition-colors">Sign In</Link>
                     </div>
                 </div>

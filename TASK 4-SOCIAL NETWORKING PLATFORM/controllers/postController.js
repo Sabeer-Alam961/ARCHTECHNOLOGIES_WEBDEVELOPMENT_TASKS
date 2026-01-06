@@ -7,7 +7,8 @@ const createNotification = require('../utils/notificationHelper');
 // @access  Protected
 const createPost = async (req, res) => {
     try {
-        const { content, privacy, image } = req.body;
+        const { content, privacy } = req.body;
+        const image = req.file ? req.file.path : '';
 
         if (!content && !image) {
             res.status(400);
@@ -18,7 +19,7 @@ const createPost = async (req, res) => {
             author: req.user.id,
             content: {
                 text: content || '',
-                image: image || '',
+                image: image,
             },
             privacy: privacy || 'public',
         });

@@ -43,18 +43,18 @@ const Login = () => {
                 </div>
 
                 {/* Right Side: Form */}
-                <div className="md:w-1/2 p-10 bg-white/50">
+                <div className="md:w-1/2 p-10 theme-bg-inner">
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900">Sign In to <span className="text-gradient">SocialNet</span></h2>
-                        <p className="text-gray-500 text-sm mt-2">Please enter your details to continue.</p>
+                        <h2 className="text-2xl font-bold theme-text-primary">Sign In to <span className="text-gradient">SocialNet</span></h2>
+                        <p className="theme-text-muted text-sm mt-2">Please enter your details to continue.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="relative">
-                            <FaEnvelope className="absolute top-4 left-4 text-gray-400" />
+                            <FaEnvelope className="absolute top-4 left-4 theme-text-muted" />
                             <input
                                 type="email"
-                                className="w-full pl-12 pr-4 py-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                className="w-full pl-12 pr-4 py-3.5 theme-bg-inner border theme-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 theme-text-primary transition-all text-sm"
                                 placeholder="Email Address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -62,10 +62,10 @@ const Login = () => {
                             />
                         </div>
                         <div className="relative">
-                            <FaLock className="absolute top-4 left-4 text-gray-400" />
+                            <FaLock className="absolute top-4 left-4 theme-text-muted" />
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                className="w-full pl-12 pr-12 py-3.5 bg-gray-50/80 border border-gray-200/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                className="w-full pl-12 pr-12 py-3.5 theme-bg-inner border theme-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 theme-text-primary transition-all text-sm"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -74,7 +74,7 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                                className="absolute top-4 right-4 theme-text-muted hover:theme-text-primary transition-colors"
                             >
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
@@ -92,20 +92,20 @@ const Login = () => {
                         </button>
                     </form>
 
-                    <div className="mt-8 border-t border-gray-200/50 pt-6">
-                        <p className="text-center text-gray-500 text-sm mb-4">Or continue with</p>
+                    <div className="mt-8 border-t theme-border pt-6">
+                        <p className="text-center theme-text-muted text-sm mb-4">Or continue with</p>
                         <div className="flex gap-4 justify-center">
-                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-200/80 text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-all hover-lift">
+                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl theme-bg-inner border theme-border text-blue-600 hover:bg-blue-500/10 transition-all hover-lift">
                                 <FaFacebook size={22} />
                             </button>
-                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white border border-gray-200/80 text-red-500 hover:bg-red-50 hover:border-red-200 transition-all hover-lift">
+                            <button className="flex items-center justify-center w-14 h-14 rounded-2xl theme-bg-inner border theme-border text-red-500 hover:bg-red-500/10 transition-all hover-lift">
                                 <FaGoogle size={22} />
                             </button>
                         </div>
                     </div>
 
                     <div className="mt-8 text-center text-sm">
-                        <span className="text-gray-500">Don't have an account? </span>
+                        <span className="theme-text-muted">Don't have an account? </span>
                         <Link to="/register" className="font-bold text-primary-600 hover:text-primary-700 hover:underline transition-colors">Register Now</Link>
                     </div>
                 </div>

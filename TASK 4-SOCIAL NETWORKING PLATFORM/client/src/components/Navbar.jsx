@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
-import { FaHome, FaUser, FaSignOutAlt, FaBell, FaSearch } from 'react-icons/fa';
+import { FaHome, FaUser, FaSignOutAlt, FaBell, FaSearch, FaCog } from 'react-icons/fa';
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
@@ -23,11 +23,11 @@ const Navbar = () => {
                 {user && (
                     <div className="hidden md:flex flex-1 max-w-md mx-8">
                         <div className="relative w-full">
-                            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 theme-text-muted" />
                             <input
                                 type="text"
                                 placeholder="Search friends, posts..."
-                                className="w-full pl-11 pr-4 py-2.5 bg-gray-50/80 rounded-full border border-gray-200/50 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-400 focus:bg-white transition-all text-sm"
+                                className="w-full pl-11 pr-4 py-2.5 theme-bg-inner rounded-full border theme-border focus:outline-none focus:ring-2 focus:ring-primary-500/30 transition-all text-sm theme-text-primary"
                             />
                         </div>
                     </div>
@@ -38,7 +38,7 @@ const Navbar = () => {
                     <div className="flex items-center gap-2">
                         <Link
                             to="/"
-                            className="p-3 text-gray-500 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all relative group icon-btn"
+                            className="p-3 text-white hover:text-primary-600 rounded-xl transition-all relative group icon-btn"
                         >
                             <FaHome className="text-xl" />
                             <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Home</span>
@@ -46,18 +46,26 @@ const Navbar = () => {
 
                         <Link
                             to="/notifications"
-                            className="p-3 text-gray-500 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all relative group icon-btn"
+                            className="p-3 text-white hover:text-primary-600 rounded-xl transition-all relative group icon-btn"
                         >
                             <FaBell className="text-xl" />
                             <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-pink-500 rounded-full border-2 border-white pulse-dot"></span>
                             <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Notifications</span>
                         </Link>
 
+                        <Link
+                            to="/settings"
+                            className="p-3 text-white hover:text-primary-600 rounded-xl transition-all relative group icon-btn"
+                        >
+                            <FaCog className="text-xl" />
+                            <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">Settings</span>
+                        </Link>
+
                         <div className="h-8 w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent mx-2"></div>
 
                         <Link
                             to={`/profile/${user.id || user._id}`}
-                            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-50 transition-all group"
+                            className="flex items-center gap-3 px-3 py-2 rounded-xl transition-all group"
                         >
                             <div className="avatar-ring">
                                 <img
@@ -66,12 +74,12 @@ const Navbar = () => {
                                     className="w-9 h-9 rounded-full object-cover ring-2 ring-white"
                                 />
                             </div>
-                            <span className="text-sm font-semibold text-gray-700 hidden sm:block group-hover:text-primary-600 transition-colors">{user.username}</span>
+                            <span className="text-lg font-semibold text-white hidden sm:block group-hover:text-primary-600 transition-colors">{user.username}</span>
                         </Link>
 
                         <button
                             onClick={logout}
-                            className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all icon-btn"
+                            className="p-3 text-white hover:text-red-500 rounded-xl transition-all icon-btn"
                             title="Logout"
                         >
                             <FaSignOutAlt className="text-lg" />
@@ -81,7 +89,7 @@ const Navbar = () => {
                     <div className="flex items-center gap-4">
                         <Link
                             to="/login"
-                            className="text-gray-600 hover:text-primary-600 font-semibold text-sm transition-colors px-4 py-2 hover:bg-primary-50 rounded-lg"
+                            className="text-white hover:text-primary-600 font-semibold text-sm transition-colors px-4 py-2 hover:bg-primary-50 rounded-lg"
                         >
                             Log in
                         </Link>
