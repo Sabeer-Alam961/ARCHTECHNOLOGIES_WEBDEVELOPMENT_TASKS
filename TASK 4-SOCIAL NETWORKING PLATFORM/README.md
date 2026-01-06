@@ -33,7 +33,9 @@ The application follows a standard **Client-Server Architecture** with a focus o
 ### 1. **Client-Side (Frontend)**
 - **Navigation:** Managed by `react-router-dom` for seamless transitions.
 - **State Management:** Uses **React Context API** to handle user authentication (login/logout) globally.
-- **UI Components:** Built with modular components (e.g., `PostCard`, `Navbar`, `CommentSection`) for reusability and clean code.
+- **UI Components:** Built with modular, high-performance components (e.g., `PostCard`, `Navbar`, `CommentSection`) using **Vanilla CSS** for a bespoke and premium feel.
+- **Modern Design:** Features **Glassmorphism**, vibrant gradients, and **Inter** typography for a cutting-edge aesthetic.
+- **Responsive Layout:** A fluid 3-column desktop layout that adapts perfectly to mobile screens.
 
 ### 2. **Server-Side (Backend)**
 - **MVC Pattern:** The code is organized into **Models** (Database structure), **Views** (Frontend), and **Controllers** (Logic).
@@ -47,8 +49,9 @@ The application follows a standard **Client-Server Architecture** with a focus o
 4. **Response:** The server sends back the updated post data.
 5. **Update:** React instantly reflects the new like count on the user's screen.
 
-### 4. **Real-time Engine**
-- **Socket.io:** We use WebSockets to enable "Live" features. When a user sends a message or gets a notification, the server "pushes" the data to the client instantly without the user needing to refresh.
+### 4. **Real-time Engine & Media**
+- **Socket.io:** We use WebSockets to enable "Live" features. When a user sends a message or gets a notification, the server "pushes" the data to the client instantly.
+- **Cloudinary:** Integrated for high-performance image hosting and transformations, allowing users to upload posts and profile avatars seamlessly.
 
 ---
 
@@ -94,5 +97,16 @@ Follow these steps to run the project locally:
 
 ---
 
+## ✨ Key Features Implemented
+
+- **Secure Authentication:** JWT-based login/register with encrypted passwords.
+- **Social Feed:** Create posts with text and images, like, and comment.
+- **Friend System:** Send, accept, reject, and unfriend requests with real-time feedback.
+- **Dynamic Profiles:** Customizable user profiles with avatar selection and status updates.
+- **Premium UI:** Dark mode support, glassmorphism effects, and smooth animations.
+
+---
+
 > [!NOTE]
-> This platform is designed for scalability. You can easily add more features like **Private Messaging**, **Group Chats**, or **Friend Suggestions** by building on top of the existing architecture!
+> This platform is designed for scalability. You can easily add more features like **Group Chats**, **Live Streaming**, or **AI-driven Recommendations** by building on top of the existing architecture!
+

@@ -53,13 +53,16 @@ This guide provides a structured, student-friendly roadmap to building a modern 
 ---
 
 ## 🏆 Final Checklist
-- [ ] Users can sign up and log in securely.
-- [ ] Users can create posts with text and images.
-- [ ] Users can like and comment on posts.
+- [x] Users can sign up and log in securely.
+- [x] Users can create posts with text and images.
+- [x] Users can like and comment on posts.
+- [x] Friend Request system (Send, Accept, Reject, Unfriend).
+- [x] Profile Avatars and Selection management.
 - [ ] Real-time notifications work for likes/comments.
 - [ ] Private messaging is functional.
-- [ ] The app is responsive and works on mobile devices.
-- [ ] Environment variables (API keys, DB URIs) are hidden and secure.
+- [x] The app is responsive and works on mobile devices.
+- [x] Modern UI with Glassmorphism and Inter typography.
+- [x] Environment variables (Cloudinary, DB URIs) are hidden and secure.
 
 ---
 
